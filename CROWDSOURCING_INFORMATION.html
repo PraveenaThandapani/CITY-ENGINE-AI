@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Feedback Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d6c7b6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            width: 60%;
+        }
+        h1 {
+            font-size: 24px;
+            color: #2f4f4f;
+        }
+        label {
+            font-size: 18px;
+        }
+        input[type="text"], textarea {
+            width: 20%; /* Reduced width */
+            padding: 4px;
+            margin: 6px 0;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+        textarea {
+            height: 80px; /* Adjusted height */
+        }
+        input[type="submit"], .option-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        input[type="submit"]:hover, .option-btn:hover {
+            background-color: #45a049;
+        }
+        #gps-message {
+            font-size: 14px;
+            color: #ff6347;
+        }
+        #auth-section, #citizen-section, #official-issue-section {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="home-section">
+        <h1>Welcome to the CitiSphere Portal</h1>
+        <button class="option-btn" onclick="showCitizenForm()">Citizen</button>
+        <button class="option-btn" onclick="showOfficialForm()">Government Official</button>
+    </div>
+
+    <!-- Citizen Feedback Form -->
+    <div id="citizen-section">
+        <h2>Submit an Issue</h2>
+        <form id="citizen-form">
+            <label for="name">Your Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="location">Location:</label><br>
+            <input type="text" id="location" name="location" required readonly><br>
+            <div id="gps-message"></div>
+
+            <label for="issue">Describe the Issue:</label><br>
+            <textarea id="issue" name="issue" required></textarea><br>
+
+            <input type="submit" value="Submit Issue">
+        </form>
+    </div>
+
+    <!-- Government Official Authentication & Submission Form -->
+    <div id="auth-section">
+        <h2>Government Official Login</h2>
+        <form id="auth-form">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <div id="official-issue-section">
+        <h2>Submit an Issue (Official)</h2>
+        <form id="official-form">
+            <label for="issue-official">Describe the Issue:</label><br>
+            <textarea id="issue-official" name="issue-official" required></textarea><br>
+            <input type="submit" value="Submit Official Issue">
+        </form>
+    </div>
+</div>
+
+<script>
+    function showCitizenForm() {
+        document.getElementById('home-section').style.display = 'none';
+        document.getElementById('auth-section').style.display = 'none';
+        document.getElementById('official-issue-section').style.display = 'none';
+        document.getElementById('citizen-section').style.display = 'block';
+        getLocation(); // Trigger GPS location for citizen
+    }
+
+    function showOfficialForm() {
+        document.getElementById('home-section').style.display = 'none';
+        document.getElementById('citizen-section').style.display = 'none';
+        document.getElementById('official-issue-section').style.display = 'none';
+        document.getElementById('auth-section').style.display = 'block';
+    }
+
+    // Function to get GPS location
+    function getLocation() {
+        const locationInput = document.getElementById('location');
+        const gpsMessage = document.getElementById('gps-message');
+        if (navigator.geolocation) {
+            gpsMessage.innerHTML = "Fetching your location...";
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                locationInput.value = `Lat: ${lat}, Lon: ${lon}`;
+                gpsMessage.innerHTML = "Location fetched!";
+            }, function() {
+                gpsMessage.innerHTML = "Unable to fetch location.";
+            });
+        } else {
+            gpsMessage.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    // Handle Government Official Login Authentication
+    document.getElementById('auth-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Mock authentication logic
+        if (username === 'admin' && password === 'password') {
+            alert("Login successful!");
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('official-issue-section').style.display = 'block';
+        } else {
+            alert("Invalid login details.");
+        }
+    });
+</script>
+
+</body>
+</html>

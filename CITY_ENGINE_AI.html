@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City AI Engine - Optimal Path Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .search-bar {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .search-bar input {
+            padding: 10px;
+            font-size: 18px;
+            width: 50%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .result h2 {
+            color: #333;
+        }
+        .visualizations {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .visualization-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+        }
+        .visualization-card img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>City AI Engine - Optimal Path Finder</h1>
+    <div class="search-bar">
+        <input type="text" id="location-input" placeholder="Enter 'Source to Destination' " />
+        <button onclick="findOptimalPath()">Search</button>
+    </div>
+    
+    <div class="result" id="result-section">
+        <!-- Optimal path and data visualization will appear here -->
+    </div>
+</div>
+
+<script>
+    function findOptimalPath() {
+        const input = document.getElementById('location-input').value;
+        const resultSection = document.getElementById('result-section');
+        
+        if (input.toLowerCase() === "madurai to dindigul") {
+            // Dynamic response based on input
+            resultSection.innerHTML = `
+                <h2>Optimal Path: Dindigul Highway</h2>
+                <div class="visualizations">
+                    <div class="visualization-card">
+                        <h3>Air Quality</h3>
+                        <img src="Graph-of-accident-density-and-accident-rate-for-individual-curves-within-the-analysed.png">
+                    </div>
+                    <div class="visualization-card">
+                        <h3>Weather Report</h3>
+                        <img src="accidentrate.PNG" alt="Weather Report">
+                    </div>
+                    <div class="visualization-card">
+                        <h3>Accident Rate (Last Week)</h3>
+                        <img src="Graph-of-accident-density-and-accident-rate-for-individual-curves-within-the-analysed.png" alt="Accident Rate">
+                    </div>
+                </div>
+            `;
+        } else {
+            resultSection.innerHTML = `<h2>No data found for the given route.</h2>`;
+        }
+    }
+</script>
+
+</body>
+</html>
